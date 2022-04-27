@@ -3,7 +3,7 @@
 """
 Created on Fri Feb  4 14:40:35 2022
 
-@author: emildanielsson
+@author: emildanielsson & JakobEP
 """
 
 #%%
@@ -101,7 +101,7 @@ playmaker_dark = {
     # Figure color and settings
     "figure.facecolor": background_playmaker,
     "figure.edgecolor": background_playmaker,
-    "figure.figsize": (16, 12),
+    "figure.figsize": (10, 6),
     "figure.constrained_layout.use": True,
     
     # Legend
@@ -113,7 +113,7 @@ playmaker_dark = {
     "legend.edgecolor": black_color,
     
     # Savefig
-    "savefig.dpi": 260,
+    "savefig.dpi": 100,
     #"savefig.edgecolor": background_playmaker,
     #"savefig.facecolor": background_playmaker,
     

@@ -3,7 +3,7 @@
 """
 Created on Fri Apr  8 15:31:44 2022
 
-@author: emildanielsson
+@author: emildanielsson & JakobEP
 
 Program description:
     
@@ -156,7 +156,7 @@ def model_off_def(df_KPI_off_def, df_KPI, position_quantile_mapper):
 "---------------------------------------------------------------------------"
 
 """
-Funtion to create PCA-scores dataframes.
+Function to create PCA-scores dataframes.
 
 :param pd.DataFrame df_KPI_train: A pandas dataframe, train data for model.
 :param pd.DataFrame df_KPI_test: A pandas dataframe, test data for model.
@@ -452,7 +452,7 @@ def map_PCA_scores(df_PCA_scores, df_PCA_scores_excl, dict_mapper = dict_playing
                 # check if column should switch sign
                 for PC in dict_mapper[position_i]:
                     
-                    # Add the "Other" column (invertedd PC1 for example)
+                    # Add the "Other" column (inverted PC1 for example)
                     if PC == "Other":
                         df_player["Other"] = df_player[dict_mapper[position_i][PC]['PC']]
                         

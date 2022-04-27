@@ -341,7 +341,7 @@ def plot_PCA_screeplot(set_position, league, results_PCA, logo_path):
     with plt.style.context(pltStyle.playmaker_dark):
     
         # Create figure and axis
-        fig2, ax2 = plt.subplots(figsize=(16, 10))
+        fig2, ax2 = plt.subplots(figsize=(10, 6))
         
         # Set ticks size
         plt.xticks(fontsize=18)
@@ -408,7 +408,7 @@ def plot_PCA_weights(df_result_weights, position_var, PCs_to_plot, dict_linear_c
     :param string position_var: position to look at.
     :param list<string> PCs_to_plot: list of PCs to plot.
     :param string logo_path: full relative path to playmaker logo png.
-    :param strirng save_path: full relative path to save location"
+    :param string save_path: full relative path to save location"
     :param string title: title of the plot (default to "PCs_to_plot").
     :param string sub_title: sub_title of the plot (default to "position_var").
     :param bool save_fig: determines if the figure should be saved.
@@ -450,7 +450,7 @@ def plot_PCA_weights(df_result_weights, position_var, PCs_to_plot, dict_linear_c
     with plt.style.context(pltStyle.playmaker_dark):
         
         # Create figure and axis
-        fig, ax = plt.subplots(figsize=(20, 12))
+        fig, ax = plt.subplots(figsize=(18, 10))
         
         # Initiate list of combined weights (linear comb)
         if dict_linear_comb_of_PCs is not None:
@@ -509,9 +509,10 @@ def plot_PCA_weights(df_result_weights, position_var, PCs_to_plot, dict_linear_c
         
         # Add legend
         if show_legend:  
-            leg = ax.legend(markerscale=1)
-            for text in leg.get_texts():
-                plt.setp(text)
+            #leg = ax.legend(markerscale=1)
+            ax.legend(markerscale=1)
+            # for text in leg.get_texts():
+            #     plt.setp(text)
         
         # Adding title and subtitle
         fig.text(0.15, 1.02, title + "\n", fontdict=dict(size=26, weight='bold'))
@@ -524,7 +525,7 @@ def plot_PCA_weights(df_result_weights, position_var, PCs_to_plot, dict_linear_c
             ax.imshow(logo_img)
         
         # Write out reference
-        fig.text(0.05, -0.015, 'By Jakob EP and Emil D, with data from PlayMaker', fontsize=18,)
+        fig.text(0.05, -0.015, 'By Jakob EP and Emil D, with data from PlayMaker', fontsize=18)
         
         plt.tight_layout(pad=2)
         
