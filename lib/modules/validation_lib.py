@@ -31,9 +31,9 @@ import modules.helpers_lib as helper
 # -Get rid of warnings
 "---------------------------------------------------------------------------"
 import warnings
-from pandas.core.common import SettingWithCopyWarning
+# from pandas.core.common import SettingWithCopyWarning
 
-warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
+warnings.simplefilter(action="ignore")
 
 
 #%%
@@ -177,8 +177,8 @@ def confusion_matrix(df, list_entries, res_predicted, res_actual, show_results =
     accuracy_list_predicted = []
     accuracy_list_actual = []
     
-    df_conf['Acc_actual'] = 0
-    df_conf.loc['Acc_predicted'] = 0
+    #df_conf['Acc_actual'] = 0
+    #df_conf.loc['Acc_predicted'] = 0
     
     # Loop through diagonal elements
     for k in range(0, len(diagonal_conf)):
@@ -205,8 +205,8 @@ def confusion_matrix(df, list_entries, res_predicted, res_actual, show_results =
     accuracy_list_predicted.append(tot_accuracy)
     
     # Add accuracy to confusion matrix
-    df_conf['Acc_actual'] = accuracy_list_actual
-    df_conf.loc['Acc_predicted'] = accuracy_list_predicted
+    #df_conf['Acc_actual'] = accuracy_list_actual
+    #df_conf.loc['Acc_predicted'] = accuracy_list_predicted
     
     if show_results:
         print(tabulate(df_conf, headers='keys', showindex=True, tablefmt=table_format))
@@ -313,7 +313,7 @@ def confusion_matrix_class_metrics(df_conf, list_classes, show_results = True, t
     ACCURACY = round(sum(list_tot_TP) / (sum(list_tot_TP) + sum(list_tot_FP)), 2)
     
     if show_results:
-        print(f"Accuracy: {ACCURACY}")
+        print(f"Total accuracy: {ACCURACY}")
         print(tabulate(df_class_metrics, headers='keys', showindex=True, tablefmt=table_format))
 
     

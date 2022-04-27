@@ -1,21 +1,31 @@
 # avatar-playing-style
-==============================
 
-Avatar playing style project done in collaboration with Football Analytics AB as a masters thesis in Engineering Physics, Uppsala university VT22.
+## Content:
+1. [Introduction](#Intro)
+2. [Setup](#Setup)
+3. [Project Organization](#Project)
+4. [Notebooks](#Notebooks)
 
-Instruction of how to run the files, and what needs to be downloaded beforehand, for the Player_Rating_Project. Project has been carried out at Uppsala university for the course "Advanced Course on Topics in Scientific Computing I", HT2021 period 1.
-
-Python Packages Needed (from requirements.txt)
 ------------
+## Introduction <a class="anchor" id="Intro"></a>
+
+Project has been carried out at Uppsala university in collaoration with Football Analytics Sweden AB,as a masters thesis in engineering physics, VT2022.
+
+------------
+## Setup <a class="anchor" id="Setup"></a>
+Make sure you have the following packages downloaded in your virtual environment:
 - `pandas`
 - `numpy`
-- `json`
 - `matplotlib`
-- `seaborn`
 - `mplsoccer`
-- `sklearn`
+- `scikit_learn`
+- `scipy`
 - `statsmodels`
 - `tabulate`
+- `Pillow`
+
+Preferably use the requirements.txt file eg.
+pip install -r requirements.txt or if using conda: conda install -r requirements.txt
 
 ## Downloads
 ------------
