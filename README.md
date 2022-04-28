@@ -24,71 +24,40 @@ Make sure you have the following packages downloaded in your virtual environment
 - `tabulate`
 - `Pillow`
 
-Preferably use the requirements.txt file eg.
-pip install -r requirements.txt or if using conda: conda install -r requirements.txt
+Preferably use the requirements.txt file to download them by either typing
 
-## Downloads
-------------
-Make sure to have Python3 downloaded, along with needed packages listed above.
+pip install -r requirements.txt
 
-Get the Wyscout data from: https://figshare.com/collections/Soccer_match_event_dataset/4415000/2 
+or if you are using Anaconda:
 
-The following data sets from Wyscout are needed: "events.json", "matches.json", "players.json" and "teams.json".
+conda install --file requirements.txt
 
-Place the downloaded Wyscout data in a folder named: `Wyscout`, placed two levels above the Python code (see below).
-
-Also download Excel-sheet `Gameweek_38.xlsx` from XXXXXXXX and place at one level above the Python code (see below).
-
-## Running Instructions
+## Project Organization <a class="anchor" id="Project"></a>
 ------------
 
-
-
-## Project Organization
-------------
-
-    ├── README.md                               <- The top-level README for running this project.
+    ├── README.md    <- The top-level README for running this project.
     |
-    ├── Wyscout                                 <- Wyscout data folder.
-    │   │
-    │   ├── players.json
-    │   │
-    │   ├── teams.json  
-    │   │
-    │   ├── events            
-    │   │   ├── events_England.json
-    │   │   ├── events_France.json
-    │   │   ├── events_Germany.json
-    │   │   ├── events_Italy.json
-    │   │   └── events_Spain.json
-    │   │
-    │   └── matches            
-    │       ├── matches_England.json
-    │       ├── matches_France.json
-    │       ├── matches_Germany.json
-    │       ├── matches_Italy.json
-    │       └── matches_Spain.json
-    │
-    └──Player_rating_Project                    <- Main folder for this project.
-        |
-        │── Gameweek_38.xlsx                    <- Excel with validation data from Whoscored to compare with.
+    ├── data         <- Folder with kpi-model data and validation data.
+    |
+    ├── figures_used <- Folder with figures used in the project, mainly PlayMaker logo.
+    |
+    ├── reports      <- Folder with written material related to the project such as hypothesis, the final master thesis report and appendix.
+    |
+    └──  lib         <- Root folder for the code of the project with python notebooks.
+        ├── position_detection.ipynb
+        ├── model_v2.ipynb
+        ├── model_v2_viz.ipynb
         │
-        │── Json_files                          <- Folder where created json-files are stored.
-        │
-        └── Python_Code                         <- Source code for this project.
-            |
-            |── create_events_df_eu.py
-            |── create_KPI_dataframe_EDIT.py
-            |── create_KPI_dataframe.py
-            |── FCPython.py
-            |── fitting_functions.py
-            |── GW_38_Ratings_evaluation.py
-            |── GW_38_Ratings.py
-            |── KPI_functions.py
-            |── minutes_played.py
-            |── the_match_ranking.py
-            |── validation_vs_WhoScored.py
-            └── xG_model_evaluation.py
+        └── modules                                
+            ├── config.py
+            ├── data_processing_lib.py
+            ├── helpers_lib.py
+            ├── models_lib.py
+            └── plot_styles.py
+            ├── radar_class.py
+            ├── validation_lib.py
+            └── viz_lib.py
+
 
 --------
 
