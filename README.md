@@ -43,21 +43,23 @@ conda install --file requirements.txt
     |
     ├── reports      <- Folder with written material related to the project such as hypothesis, the final master thesis report and appendix.
     |
-    └──  lib         <- Root folder for the code of the project with python notebooks.
+    └──  lib         <- Root folder for the code of the project with python notebooks and the module folder.
         ├── position_detection.ipynb
         ├── model_v2.ipynb
         ├── model_v2_viz.ipynb
         │
-        └── modules                                
+        └── modules   <- Folder with module files used in the project.                       
             ├── config.py
             ├── data_processing_lib.py
             ├── helpers_lib.py
             ├── models_lib.py
-            └── plot_styles.py
+            ├── plot_styles.py
             ├── radar_class.py
             ├── validation_lib.py
             └── viz_lib.py
 
+
+## Notebooks <a class="anchor" id="Notebooks"></a>
 
 --------
 
