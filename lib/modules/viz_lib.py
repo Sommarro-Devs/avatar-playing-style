@@ -16,7 +16,6 @@ Program description:
 "---------------------------------------------------------------------------"
 
 # Basics
-# Basics
 from pathlib import Path
 import numpy as np
 
@@ -33,6 +32,7 @@ import statsmodels.api as sm
 # Project module
 import modules.plot_styles as pltStyle
 from modules.radar_class import PlayMakerRadar
+from modules.config import dict_playingStyle_mapper
 
 
 #%%
@@ -536,6 +536,62 @@ def plot_PCA_weights(df_result_weights, position_var, PCs_to_plot, dict_linear_c
                
     # Show Plot
     plt.show()
+
+
+def single_player_notebook_plot(df_playing_styles, player_name, num_position_playingS, use_ranking_scale, logo_path):
+    # get the player values
+    df_player = df_playing_styles.loc[df_playing_styles['name'] == player_name]
+    #print(df_player)
+    actual_player_pos = df_player['Position'].values[0]
+
+    # Initate params variable
+    params = []
+    active_params = []
+
+    # go through dictionary to add the params
+    for position_i in dict_playingStyle_mapper:
+        
+        for PC in dict_playingStyle_mapper[position_i]:
+            
+            # Only add to params if larger than 0
+            if  num_position_playingS[position_i] > 0:
+            
+                params.append(dict_playingStyle_mapper[position_i][PC]['playing_style'])
+                
+                # If the active player position
+                if position_i == actual_player_pos:
+                    active_params.append(dict_playingStyle_mapper[position_i][PC]['playing_style'])
+
+    # initate player_values
+    player_values = []
+
+    for position_i in dict_playingStyle_mapper:
+        for PC in dict_playingStyle_mapper[position_i]:
+            
+            # Find value for this PC-component for this position
+            value_pos_i = df_player[dict_playingStyle_mapper[position_i][PC]['playing_style']].values[0]
+            
+            # append to player_values
+            # Only add to params if larger than 0
+            if  num_position_playingS[position_i] > 0:
+                player_values.append(value_pos_i)
+
+    # Set high and lows for spider
+    # get high and lows ([-1,1]) 
+    low = (np.ones(len(params)) * -1).tolist()
+    high = np.ones(len(params)).tolist()
+
+    # If we want to use ranking scale instead (quantiles within the league)
+    if use_ranking_scale:
+        
+        # get high and lows ([0, 1]) 
+        low = np.zeros(len(params)).tolist()
+        high = np.ones(len(params)).tolist()
+
+    # Get the spider figure
+    single_player_playmaker_spider(params, player_values, player_name, '', actual_player_pos, logo_path, low, high,  active_params = active_params)
+
+    #return figure_Spider
 
 
 def single_player_playmaker_spider(params,

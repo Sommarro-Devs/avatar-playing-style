@@ -367,7 +367,7 @@ def create_PCA_scores(df_KPI_train, df_KPI_test, nr_of_PCs = 6, screeplot = Fals
         
         
         #%
-        # - Save results Allsvenskan
+        # - Save results
         "---------------------------------------------------------------------------"
         
         # df_result_weights = pd.concat([df_result_weights, df_weights])

@@ -97,7 +97,7 @@ class PlayMakerRadar:
         ax.set(xlim=(-lim, lim), ylim=(-lim, lim))
         set_visible(ax)
 
-    def setup_axis(self, facecolor='#FFFFFF', figsize=(12, 10), ax=None, **kwargs):
+    def setup_axis(self, facecolor='#FFFFFF', figsize=(10, 8), ax=None, **kwargs):
         """ Setup an axis for plotting radar charts. If an ax is specified the settings are applied
          to an existing axis. This method equalises the aspect ratio,
          and sets the facecolor and limits.
