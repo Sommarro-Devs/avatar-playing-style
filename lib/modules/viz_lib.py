@@ -538,7 +538,7 @@ def plot_PCA_weights(df_result_weights, position_var, PCs_to_plot, dict_linear_c
     plt.show()
 
 
-def single_player_notebook_plot(df_playing_styles, player_name, num_position_playingS, use_ranking_scale, logo_path):
+def single_player_notebook_plot(df_playing_styles, player_name, player_club, num_position_playingS, use_ranking_scale, logo_path):
     # get the player values
     df_player = df_playing_styles.loc[df_playing_styles['name'] == player_name]
     #print(df_player)
@@ -589,7 +589,7 @@ def single_player_notebook_plot(df_playing_styles, player_name, num_position_pla
         high = np.ones(len(params)).tolist()
 
     # Get the spider figure
-    single_player_playmaker_spider(params, player_values, player_name, '', actual_player_pos, logo_path, low, high,  active_params = active_params)
+    single_player_playmaker_spider(params, player_values, player_name, player_club, actual_player_pos, logo_path, low, high,  active_params = active_params)
 
     #return figure_Spider
 
@@ -642,6 +642,13 @@ def single_player_playmaker_spider(params,
     # styling for params
     active_params_style = {'fontsize' : 27, 'color': 'orange'}
     non_active_params_style = {'fontsize' : 22, 'alpha': 0.8,}
+
+    if (len(params) > 7 ):
+        active_params_style = {'fontsize' : 20, 'color': 'orange'}
+        non_active_params_style = {'fontsize' : 16, 'alpha': 0.8,}
+    if (len(params) > 10 ):
+        active_params_style = {'fontsize' : 14, 'color': 'orange'}
+        non_active_params_style = {'fontsize' : 12, 'alpha': 0.8,}
 
     # use playmaker theme to plot
     with plt.style.context(pltStyle.playmaker_dark):
@@ -700,6 +707,73 @@ def single_player_playmaker_spider(params,
     plt.show()
     
     return fig
+
+
+def compare_players_notebook_plot(df_playing_styles, player_name1, player_name2, player_club1, player_club2, num_position_playingS, use_ranking_scale, logo_path):
+    # get the player2 values
+    df_player1 = df_playing_styles.loc[df_playing_styles['name'] == player_name1]
+    df_player2= df_playing_styles.loc[df_playing_styles['name'] == player_name2]
+
+    #print(df_player)
+    actual_player_pos1 = df_player1['Position'].values[0]
+    actual_player_pos2 = df_player2['Position'].values[0]
+
+    # Initate params variable
+    params = []
+    active_params1 = []
+    active_params2 = []
+
+    # go through dictionary to add the params
+    for position_i in dict_playingStyle_mapper:
+        
+        for PC in dict_playingStyle_mapper[position_i]:
+            
+            # Only add to params if larger than 0
+            if  num_position_playingS[position_i] > 0:
+            
+                params.append(dict_playingStyle_mapper[position_i][PC]['playing_style'])
+                
+                # If the active player position
+                if position_i == actual_player_pos1:
+                    active_params1.append(dict_playingStyle_mapper[position_i][PC]['playing_style'])
+                if position_i == actual_player_pos2:
+                    active_params2.append(dict_playingStyle_mapper[position_i][PC]['playing_style'])
+                
+
+    # initate player_values
+    player_values1 = []
+    player_values2 = []
+
+    for position_i in dict_playingStyle_mapper:
+        for PC in dict_playingStyle_mapper[position_i]:
+            
+            # Find value for this PC-component for this position
+            value_pos_i1 = df_player1[dict_playingStyle_mapper[position_i][PC]['playing_style']].values[0]
+            value_pos_i2 = df_player2[dict_playingStyle_mapper[position_i][PC]['playing_style']].values[0]
+            
+            # append to player_values
+            # Only add to params if larger than 0
+            if  num_position_playingS[position_i] > 0:
+                player_values1.append(value_pos_i1)
+                player_values2.append(value_pos_i2)
+
+    # Set high and lows for spider
+    # get high and lows ([-1,1]) 
+    low = (np.ones(len(params)) * -1).tolist()
+    high = np.ones(len(params)).tolist()
+
+    # If we want to use ranking scale instead (quantiles within the league)
+    if use_ranking_scale:
+        
+        # get high and lows ([0, 1]) 
+        low = np.zeros(len(params)).tolist()
+        high = np.ones(len(params)).tolist()
+
+    # Get the spider figure
+    compare_players_playmaker_spider(params, player_values1, player_name1, player_club1, actual_player_pos1, 
+    player_values2, player_name2, player_club2, actual_player_pos2,
+    logo_path, low, high,  active_params1 = active_params1, active_params2 = active_params2)
+
 
 
 def compare_players_playmaker_spider(params,
@@ -770,6 +844,15 @@ def compare_players_playmaker_spider(params,
     non_active_params_style = {'fontsize' : 22, 'alpha': 0.8,}
     hide_params_style = {'fontsize' : 0, 'alpha': 0.0,} # use for params to not show
 
+    if (len(params) > 7 ):
+        active_params_style1 = {'fontsize' : 20, 'color': scatter_color1}
+        active_params_style2 = {'fontsize' : 20, 'color': scatter_color2}
+        non_active_params_style = {'fontsize' : 16, 'alpha': 0.8,}
+    if (len(params) > 10 ):
+        active_params_style1 = {'fontsize' : 14, 'color': scatter_color1}
+        active_params_style2 = {'fontsize' : 14, 'color': scatter_color2}
+        non_active_params_style = {'fontsize' : 12, 'alpha': 0.8,}
+
     # use playmaker theme to plot
     with plt.style.context(pltStyle.playmaker_dark):
         fig, axs = radar.setup_axis(facecolor = pltStyle.background_playmaker)
@@ -834,23 +917,23 @@ def compare_players_playmaker_spider(params,
                              c=scatter_color2, edgecolors=scatter_color2, marker='o', s=150, zorder=3)
                                              
         # Adding title and subtitle player 1
-        fig.text(1.35, 0.60, player1 + ',   ' + '\n', fontsize=25,
+        fig.text(1.55, 0.60, player1 + ',   ' + '\n', fontsize=25,
                                     ha='right', va='center', c = '#00f2c1')
-        fig.text(1.37, 0.60, position1 + '\n', fontsize=25,
+        fig.text(1.57, 0.60, position1 + '\n', fontsize=25,
                                     ha='right', va='center', c=scatter_color1)
-        fig.text(1.37, 0.58, club1, fontsize=22,
+        fig.text(1.57, 0.58, club1, fontsize=22,
                                     ha='right', va='center', color=pltStyle.red_playmaker)
         
         # Adding title and subtitle player 2
-        fig.text(1.35, 0.40, player2 + ',   ' + '\n', fontsize=25,
+        fig.text(1.55, 0.40, player2 + ',   ' + '\n', fontsize=25,
                                     ha='right', va='center', c= '#d80499')
-        fig.text(1.37, 0.40, position2 + '\n', fontsize=25,
+        fig.text(1.57, 0.40, position2 + '\n', fontsize=25,
                                     ha='right', va='center', c=scatter_color2)
-        fig.text(1.37, 0.38, club2, fontsize=22,
+        fig.text(1.57, 0.38, club2, fontsize=22,
                                     ha='right', va='center', color=pltStyle.red_playmaker)
         
         # Add title top right
-        fig.text(1.35, 1.02,  'Playing-style comparison\n', fontsize=28,
+        fig.text(1.45, 1.02,  'Playing-style comparison\n', fontsize=28,
                                     ha='right', va='center', c = 'white', fontweight= 'bold')
         
         # Adding logo
