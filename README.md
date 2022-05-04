@@ -48,6 +48,7 @@ conda install --file requirements.txt
     |
     └──  lib         <- Root folder for the code of the project with python notebooks and the module folder.
         ├── position_detection.ipynb
+        ├── model_v1.ipynb
         ├── model_v2.ipynb
         ├── model_v2_viz.ipynb
         │
@@ -63,6 +64,14 @@ conda install --file requirements.txt
 
 
 ## Notebooks <a class="anchor" id="Notebooks"></a>
+
+### position_detection.ipynb
+
+### model_v1.ipynb
+
+### model_v2.ipynb
+
+### model_v2_viz.ipynb
 
 --------
 
