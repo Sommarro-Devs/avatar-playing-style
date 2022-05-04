@@ -26,6 +26,14 @@ dict_playingStyle_indices = {
     'CB': [5.1, 5.2, 5.3]    
     }
 
+dict_playingStyle_strings = {
+    'ST': ["The Target", "The Poacher", "The Artist", "The Worker"],
+    'CM': [ "The Box-to-box", "The Playmaker", "The Anchor"],
+    'OW': ["The Solo-dribbler", "The 4-4-2-fielder", "The Star"],
+    'FB': ["The Winger", "The Defensive-minded", "The Inverted"],
+    'CB': ["The Leader", "The Low-risk-taker", "The Physical"]    
+    }
+
 # list of all playing style indices
 list_all_playingStyle_indices = [1.1, 1.2, 1.3, 1.4, 2.1, 2.2, 2.3,
                                  3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 5.1, 5.2, 5.3]
@@ -35,6 +43,8 @@ list_all_playingStyle_strings = ["The Target", "The Poacher", "The Artist", "The
                        "The Solo-dribbler", "The 4-4-2-fielder", "The Star",
                        "The Winger", "The Defensive-minded", "The Inverted",
                        "The Leader", "The Low-risk-taker", "The Physical"]
+
+
 
 
 #%%

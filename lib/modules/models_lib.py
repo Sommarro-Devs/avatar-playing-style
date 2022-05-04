@@ -542,6 +542,7 @@ def map_PCA_scores(df_PCA_scores, df_PCA_scores_excl, dict_mapper = dict_playing
     columns_new_order = ['name', 'Position', 'Playing-style', 'Playing-style_excl']
     columns_new_order.extend(list_playingS)
     df_result = df_result.reindex(columns = columns_new_order)
+    # df_result.drop('index', axis = 1, inplace = True)
 
     return df_result
 

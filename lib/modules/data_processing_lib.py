@@ -16,12 +16,17 @@ Program description:
 # - Imports
 "---------------------------------------------------------------------------"
 
-from pathlib import Path
-import sys, os
+import os
 import pandas as pd
 
 import os
 import json
+
+# Project module
+from modules.config import dict_playingStyle_strings, list_all_playingStyle_strings
+
+# Standarnization
+from sklearn.preprocessing import QuantileTransformer
 
 
 #%%
@@ -116,7 +121,45 @@ def get_all_events(directory_seasons, season_name, directory_save_data=None):
     return df_result
 
 
+def df_playing_styles_to_quantile(df_playing_styles):
+    """
+    Function which rescale the playing style scores to quantiles.
+    
+    Intended to be used on data from function modules/models_lib.py: map_PCA_scores().
+    
+    :returns: Resulting dataframe quantile scaled playing style for all players in the dataframe.
+    """ 
 
+    df_result = df_playing_styles.copy()
+
+    df_result.drop(list_all_playingStyle_strings, axis = 1, inplace = True)
+
+    for position in dict_playingStyle_strings:
+
+        # Find dataframes of playingstyle in position and not in position 
+        df_pos_i = df_playing_styles.loc[df_playing_styles['Position'] == position]
+        df_excl_i = df_playing_styles.loc[df_playing_styles['Position'] != position]
+
+        # quantile scale for this position 
+        df_pos_i[dict_playingStyle_strings[position]] = QuantileTransformer(n_quantiles=10, random_state=0).fit_transform(df_pos_i[dict_playingStyle_strings[position]])
+
+        # other quantile scale for out-of-position players for this playing style
+        df_excl_i[dict_playingStyle_strings[position]] = QuantileTransformer(n_quantiles=10, random_state=0).fit_transform(df_excl_i[dict_playingStyle_strings[position]])
+
+        # initiate list of columns to keep
+        final_columns = ['name', 'Position']
+        final_columns.extend(dict_playingStyle_strings[position])
+        df_pos_i.drop(columns=[col for col in df_pos_i if col not in final_columns], inplace=True)
+        df_excl_i.drop(columns=[col for col in df_excl_i if col not in final_columns], inplace=True)
+
+        # Concatenate
+        df_result_pos_i = pd.concat([df_pos_i, df_excl_i])
+
+        # merge with result dataframe
+        df_result = df_result.merge(df_result_pos_i, on = ['name', 'Position'])
+            
+     
+    return df_result
 
 
 
