@@ -1,4 +1,7 @@
 # avatar-playing-style
+The developed model aims to classify an individual football player’s playing style solely based on his or hers event data collected from football matches he or she has participated in. Done in collaboration with Football Analytics AB as a masters thesis in engineering physics spring term of 2022, Uppsala University.
+
+For further backround and results regardning the master thesis, feel free to look at the report folder.
 
 ## Content:
 1. [Introduction](#Intro)
