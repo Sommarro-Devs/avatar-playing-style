@@ -33,6 +33,7 @@ import statsmodels.api as sm
 import modules.plot_styles as pltStyle
 from modules.radar_class import PlayMakerRadar
 from modules.config import dict_playingStyle_mapper
+from modules.plot_styles import position_colors
 
 
 #%%
@@ -638,17 +639,19 @@ def single_player_playmaker_spider(params,
     
     # - Plot
     "---------------------------------------------------------------------------"
+
+    color = position_colors[position]
     
     # styling for params
-    active_params_style = {'fontsize' : 27, 'color': 'orange'}
+    active_params_style = {'fontsize' : 27, 'color': color, 'weight': 'bold'}
     non_active_params_style = {'fontsize' : 22, 'alpha': 0.8,}
 
     if (len(params) > 7 ):
-        active_params_style = {'fontsize' : 20, 'color': 'orange'}
-        non_active_params_style = {'fontsize' : 16, 'alpha': 0.8,}
-    if (len(params) > 10 ):
-        active_params_style = {'fontsize' : 14, 'color': 'orange'}
-        non_active_params_style = {'fontsize' : 12, 'alpha': 0.8,}
+        active_params_style = {'fontsize' : 17, 'color': color, 'weight': 'bold'}
+        non_active_params_style = {'fontsize' : 14, 'alpha': 0.8,}
+    if (len(params) >= 10 ):
+        active_params_style = {'fontsize' : 13, 'color': color, 'weight': 'bold'}
+        non_active_params_style = {'fontsize' : 11, 'alpha': 0.8,}
 
     # use playmaker theme to plot
     with plt.style.context(pltStyle.playmaker_dark):
@@ -659,7 +662,7 @@ def single_player_playmaker_spider(params,
         
         # draw the radar
         radar_output = radar.draw_radar(player_values, ax=axs,
-                                        kwargs_radar={'facecolor': 'white', 'alpha': 0.4},
+                                        kwargs_radar={'facecolor': color, 'alpha': 0.4},
                                         kwargs_rings={'facecolor': 'white', 'alpha': 0.0})
                                               
         # draw radar params
@@ -678,15 +681,15 @@ def single_player_playmaker_spider(params,
         active_vertices_x = vertices[active_indexes, 0]
         active_vertices_y = vertices[active_indexes, 1]
         axs.scatter(active_vertices_x, active_vertices_y,
-                             c='orange', edgecolors='orange', marker='o', s=150, zorder=2)
+                             c=color, edgecolors=color, marker='o', s=150, zorder=2)
                                              
         # Adding title and subtitle
         fig.text(0.95, 1.02, player + ',   ' + '\n', fontsize=25,
                                     ha='right', va='center')
         fig.text(0.97, 1.02, position + '\n', fontsize=25,
-                                    ha='right', va='center', c='orange')
+                                    ha='right', va='center', c=color)
         fig.text(0.97, 1.00, club, fontsize=22,
-                                    ha='right', va='center', color=pltStyle.red_playmaker)
+                                    ha='right', va='center')
         
         # Adding logo
         if logo_img:
@@ -831,26 +834,22 @@ def compare_players_playmaker_spider(params,
     
     # - Plot
     "---------------------------------------------------------------------------"
-    
-    # style for scattter
-    scatter_color1 = 'orange'
-    scatter_color2 = 'lime'
-    if position1 == position2:
-        scatter_color2 = scatter_color1
+    color1 = position_colors[position1]
+    color2 = position_colors[position2]
     
     # styling for params
-    active_params_style1 = {'fontsize' : 27, 'color': scatter_color1}
-    active_params_style2 = {'fontsize' : 27, 'color': scatter_color2}
+    active_params_style1 = {'fontsize' : 27, 'color': color1, 'weight': 'bold'}
+    active_params_style2 = {'fontsize' : 27, 'color': color2, 'weight': 'bold'}
     non_active_params_style = {'fontsize' : 22, 'alpha': 0.8,}
     hide_params_style = {'fontsize' : 0, 'alpha': 0.0,} # use for params to not show
 
     if (len(params) > 7 ):
-        active_params_style1 = {'fontsize' : 20, 'color': scatter_color1}
-        active_params_style2 = {'fontsize' : 20, 'color': scatter_color2}
+        active_params_style1 = {'fontsize' : 20, 'color': color1, 'weight': 'bold'}
+        active_params_style2 = {'fontsize' : 20, 'color': color2, 'weight': 'bold'}
         non_active_params_style = {'fontsize' : 16, 'alpha': 0.8,}
     if (len(params) > 10 ):
-        active_params_style1 = {'fontsize' : 14, 'color': scatter_color1}
-        active_params_style2 = {'fontsize' : 14, 'color': scatter_color2}
+        active_params_style1 = {'fontsize' : 14, 'color': color1, 'weight': 'bold'}
+        active_params_style2 = {'fontsize' : 14, 'color': color2, 'weight': 'bold'}
         non_active_params_style = {'fontsize' : 12, 'alpha': 0.8,}
 
     # use playmaker theme to plot
@@ -862,8 +861,8 @@ def compare_players_playmaker_spider(params,
         
         # draw the radar
         radar_output = radar.draw_radar_compare(player_values1, player_values2, ax=axs,
-                                        kwargs_radar={'facecolor': '#00f2c1', 'alpha': 0.6},
-                                        kwargs_compare={'facecolor': '#d80499', 'alpha': 0.6})
+                                        kwargs_radar={'facecolor': color1, 'alpha': 0.6},
+                                        kwargs_compare={'facecolor': color2, 'alpha': 0.6})
                                               
         # draw radar params
         if position1 == position2: 
@@ -902,7 +901,7 @@ def compare_players_playmaker_spider(params,
         active_vertices_x1 = vertices1[active_indexes1, 0]
         active_vertices_y1 = vertices1[active_indexes1, 1]
         axs.scatter(active_vertices_x1, active_vertices_y1,
-                             c=scatter_color1, edgecolors=scatter_color1, marker='o', s=150, zorder=3)
+                             c=color1, edgecolors=color1, marker='o', s=150, zorder=3)
         
         # Plot non active scatters for for player 2
         non_active_vertices_x2 = np.delete(vertices2[:, 0], active_indexes2)
@@ -914,23 +913,23 @@ def compare_players_playmaker_spider(params,
         active_vertices_x2 = vertices2[active_indexes2, 0]
         active_vertices_y2 = vertices2[active_indexes2, 1]
         axs.scatter(active_vertices_x2, active_vertices_y2,
-                             c=scatter_color2, edgecolors=scatter_color2, marker='o', s=150, zorder=3)
+                             c=color2, edgecolors=color2, marker='o', s=150, zorder=3)
                                              
         # Adding title and subtitle player 1
         fig.text(1.55, 0.60, player1 + ',   ' + '\n', fontsize=25,
-                                    ha='right', va='center', c = '#00f2c1')
+                                    ha='right', va='center')
         fig.text(1.57, 0.60, position1 + '\n', fontsize=25,
-                                    ha='right', va='center', c=scatter_color1)
+                                    ha='right', va='center', c=color1)
         fig.text(1.57, 0.58, club1, fontsize=22,
-                                    ha='right', va='center', color=pltStyle.red_playmaker)
+                                    ha='right', va='center')
         
         # Adding title and subtitle player 2
         fig.text(1.55, 0.40, player2 + ',   ' + '\n', fontsize=25,
-                                    ha='right', va='center', c= '#d80499')
+                                    ha='right', va='center')
         fig.text(1.57, 0.40, position2 + '\n', fontsize=25,
-                                    ha='right', va='center', c=scatter_color2)
+                                    ha='right', va='center', c=color2)
         fig.text(1.57, 0.38, club2, fontsize=22,
-                                    ha='right', va='center', color=pltStyle.red_playmaker)
+                                    ha='right', va='center')
         
         # Add title top right
         fig.text(1.45, 1.02,  'Playing-style comparison\n', fontsize=28,

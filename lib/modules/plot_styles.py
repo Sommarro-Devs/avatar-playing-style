@@ -40,6 +40,20 @@ black_color = 'black'
 grey_color = "grey"
 grass_color = '#46812c'
 snow_color = '#fafafa'
+st_color = '#fe9900'
+cm_color = '#b4a7d6'
+ow_color = '#6aa84f'
+fb_color = '#6fa8dc'
+cb_color = '#cc4125'
+
+position_colors = {
+        'ST': st_color,
+        'CM': cm_color,
+        'OW': ow_color,
+        'FB': fb_color,
+        'CB': cb_color
+}
+
 
 
 #%%

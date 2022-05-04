@@ -380,7 +380,7 @@ kwargs_compare={'facecolor': '#d80499', 'alpha': 0.6})
         return label_list
 
 
-    def draw_param_labels(self, active_params = [], ax=None, wrap=15, offset=1, kwargs_non_active_text=None, kwargs_active_text=None):
+    def draw_param_labels(self, active_params = [], ax=None, wrap=13, offset=1, kwargs_non_active_text=None, kwargs_active_text=None):
         """ Draw the parameter labels (e.g. 'Key Passes') on the edge of the chart.
 
         Parameters
