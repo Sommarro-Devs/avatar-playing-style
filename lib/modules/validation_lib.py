@@ -41,7 +41,7 @@ warnings.simplefilter(action="ignore")
 "---------------------------------------------------------------------------"
 
 # Validation data 
-df_validation = pd.read_excel('../data/validation_data.xlsx')
+df_validation = pd.read_excel('../data/validation_data_v2.xlsx')
 
 # Drop duplicates
 df_validation.drop_duplicates(subset=['Player_name'], inplace=True)
