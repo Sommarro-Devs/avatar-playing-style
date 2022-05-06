@@ -545,20 +545,3 @@ def map_PCA_scores(df_PCA_scores, df_PCA_scores_excl, dict_mapper = dict_playing
     # df_result.drop('index', axis = 1, inplace = True)
 
     return df_result
-
-#%%
-# - Model Version 3: Supervised SGD 
-#                                           
-"---------------------------------------------------------------------------"
-
-"""
-Funtion to create PCA-scores dataframes.
-
-:param pd.DataFrame df_KPI_train: A pandas dataframe, train data for model.
-:param pd.DataFrame df_KPI_test: A pandas dataframe, test data for model.
-:param int nr_of_PCs: Number of PCs to get scores from.
-:param bool screeplot: Show screeplots or not.
-
-:returns: A dictionary with model results.
-"""
-# def model_sgd(df_KPI_train, df_KPI_test, nr_of_PCs = 6, screeplot = True):
