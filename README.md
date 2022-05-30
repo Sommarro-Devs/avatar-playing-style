@@ -40,7 +40,7 @@ conda install --file requirements.txt
 
     ├── README.md    <- The top-level README for running this project.
     |
-    ├── data         <- Folder with kpi-model data and validation data.
+    ├── data         <- Folder with match event data, kpi-data and validation data.
     |
     ├── figures_used <- Folder with figures used in the project, mainly PlayMaker logo.
     |
@@ -66,12 +66,16 @@ conda install --file requirements.txt
 ## Notebooks <a class="anchor" id="Notebooks"></a>
 
 ### position_detection.ipynb
+Notebook with validation and vizualisations for the position detection model.
 
 ### model_v1.ipynb
+Notebook with validation for Model v.1.
 
 ### model_v2.ipynb
+Notebook with validation for Model v.2.
 
 ### model_v2_viz.ipynb
+Notebook with GUIs for spider vizualizations of the Model v.2 results.
 
 --------
 
