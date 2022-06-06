@@ -27,7 +27,7 @@ from modules.config import positions, dict_kpi_settings, dict_playingStyle_mappe
 
 # Statistical fitting of models
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 #%%
@@ -264,33 +264,36 @@ def create_PCA_scores(df_KPI_train, df_KPI_test, nr_of_PCs = 6, screeplot = Fals
         # Get PC scores for the other positions
         scores_PCA_excl_train = model_PCA.transform(df_KPI_excl_std_train)
         scores_PCA_excl_test = model_PCA.transform(df_KPI_excl_std_test)
+
+        # Rescale to minmax
+        scores_PCA_train = MinMaxScaler().fit_transform(scores_PCA_train)
+        scores_PCA_excl_train = MinMaxScaler().fit_transform(scores_PCA_excl_train)
+        scores_PCA_test = MinMaxScaler().fit_transform(scores_PCA_test)
+        scores_PCA_excl_test = MinMaxScaler().fit_transform(scores_PCA_excl_test)
         
         
         #%
         # - Rescale PC values
         "---------------------------------------------------------------------------"
-        
-        # df_result_PCA_scaled = df_result_PCA.copy()
-        # df_reuslt_PCA_excl_scaled = df_result_PCA_excl.copy()
          
-        # Loop through columns to rescale
-        for i in range(0, nr_of_PCs):
+        # # Loop through columns to rescale
+        # for i in range(0, nr_of_PCs):
             
-            # Find scalers train data
-            scaler_train = 1.0/(scores_PCA_train[:,i].max() - scores_PCA_train[:,i].min())
-            scaler_excl_train = 1.0/(scores_PCA_excl_train[:,i].max() - scores_PCA_excl_train[:,i].min())
+        #     # Find scalers train data
+        #     scaler_train = 1.0/(scores_PCA_train[:,i].max() - scores_PCA_train[:,i].min())
+        #     scaler_excl_train = 1.0/(scores_PCA_excl_train[:,i].max() - scores_PCA_excl_train[:,i].min())
             
-            # scale column pc_i train data
-            scores_PCA_train[:,i] = scores_PCA_train[:,i]*scaler_train
-            scores_PCA_excl_train[:,i] = scores_PCA_excl_train[:,i]*scaler_excl_train
+        #     # scale column pc_i train data
+        #     scores_PCA_train[:,i] = scores_PCA_train[:,i]*scaler_train
+        #     scores_PCA_excl_train[:,i] = scores_PCA_excl_train[:,i]*scaler_excl_train
             
-            # Allsvenskan
-            scaler_test = 1.0/(scores_PCA_test[:,i].max() - scores_PCA_test[:,i].min())
-            scaler_excl_test = 1.0/(scores_PCA_excl_test[:,i].max() - scores_PCA_excl_test[:,i].min())
+        #     # test
+        #     scaler_test = 1.0/(scores_PCA_test[:,i].max() - scores_PCA_test[:,i].min())
+        #     scaler_excl_test = 1.0/(scores_PCA_excl_test[:,i].max() - scores_PCA_excl_test[:,i].min())
             
-            # scale column pc_i
-            scores_PCA_test[:,i] = scores_PCA_test[:,i]*scaler_test
-            scores_PCA_excl_test[:,i] = scores_PCA_excl_test[:,i]*scaler_excl_test
+        #     # scale column pc_i
+        #     scores_PCA_test[:,i] = scores_PCA_test[:,i]*scaler_test
+        #     scores_PCA_excl_test[:,i] = scores_PCA_excl_test[:,i]*scaler_excl_test
         
         
         #%
@@ -459,7 +462,7 @@ def map_PCA_scores(df_PCA_scores, df_PCA_scores_excl, dict_mapper = dict_playing
                     # Check if to invert 
                     if dict_mapper[position_i][PC]['inverted']:
                         # print("inverted")
-                        df_player[PC] = df_player[PC]*-1
+                        df_player[PC] = 1-df_player[PC]
                         
                     # Add PC value to the list
                     player_result_list.append(df_player[PC].values[0])
@@ -479,7 +482,7 @@ def map_PCA_scores(df_PCA_scores, df_PCA_scores_excl, dict_mapper = dict_playing
                     # Check if to invert 
                     if dict_mapper[position_i][PC]['inverted']:
                         # print("inverted")
-                        df_player_excl_pos[PC] = df_player_excl_pos[PC]*-1
+                        df_player_excl_pos[PC] = 1-df_player_excl_pos[PC]
                         
                     # Add PC value to the list
                     player_result_list.append(df_player_excl_pos[PC].values[0])

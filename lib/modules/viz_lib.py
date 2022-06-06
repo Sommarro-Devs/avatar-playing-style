@@ -539,7 +539,7 @@ def plot_PCA_weights(df_result_weights, position_var, PCs_to_plot, dict_linear_c
     plt.show()
 
 
-def single_player_notebook_plot(df_playing_styles, player_name, player_club, num_position_playingS, use_ranking_scale, logo_path):
+def single_player_notebook_plot(df_playing_styles, player_name, player_club, num_position_playingS, logo_path):
     # get the player values
     df_player = df_playing_styles.loc[df_playing_styles['name'] == player_name]
     #print(df_player)
@@ -579,15 +579,16 @@ def single_player_notebook_plot(df_playing_styles, player_name, player_club, num
 
     # Set high and lows for spider
     # get high and lows ([-1,1]) 
-    low = (np.ones(len(params)) * -1).tolist()
-    high = np.ones(len(params)).tolist()
+    # low = (np.ones(len(params)) * -1).tolist()
+    # high = np.ones(len(params)).tolist()
 
     # If we want to use ranking scale instead (quantiles within the league)
-    if use_ranking_scale:
+    
         
-        # get high and lows ([0, 1]) 
-        low = np.zeros(len(params)).tolist()
-        high = np.ones(len(params)).tolist()
+    # get high and lows ([0, 1]) 
+    low = np.zeros(len(params)).tolist()
+    low = [i - 0.25 for i in low]
+    high = np.ones(len(params)).tolist()
 
     # Get the spider figure
     single_player_playmaker_spider(params, player_values, player_name, player_club, actual_player_pos, logo_path, low, high,  active_params = active_params)
@@ -712,7 +713,7 @@ def single_player_playmaker_spider(params,
     return fig
 
 
-def compare_players_notebook_plot(df_playing_styles, player_name1, player_name2, player_club1, player_club2, num_position_playingS, use_ranking_scale, logo_path):
+def compare_players_notebook_plot(df_playing_styles, player_name1, player_name2, player_club1, player_club2, num_position_playingS, logo_path):
     # get the player2 values
     df_player1 = df_playing_styles.loc[df_playing_styles['name'] == player_name1]
     df_player2= df_playing_styles.loc[df_playing_styles['name'] == player_name2]
@@ -760,17 +761,10 @@ def compare_players_notebook_plot(df_playing_styles, player_name1, player_name2,
                 player_values1.append(value_pos_i1)
                 player_values2.append(value_pos_i2)
 
-    # Set high and lows for spider
-    # get high and lows ([-1,1]) 
-    low = (np.ones(len(params)) * -1).tolist()
+    # get high and lows ([0, 1]) 
+    low = np.zeros(len(params)).tolist()
+    low = [i - 0.25 for i in low]
     high = np.ones(len(params)).tolist()
-
-    # If we want to use ranking scale instead (quantiles within the league)
-    if use_ranking_scale:
-        
-        # get high and lows ([0, 1]) 
-        low = np.zeros(len(params)).tolist()
-        high = np.ones(len(params)).tolist()
 
     # Get the spider figure
     compare_players_playmaker_spider(params, player_values1, player_name1, player_club1, actual_player_pos1, 
